@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=MainWindow
+comment0.text=\r\n\ Janela\ de\ interacao\ com\ o\ usuario\r\n\r\n\ @author\ Bruna\ Cagliari,\ Ludhiane\ Pereira\ e\ Tiago\ Binz\r\n\ @version\ 03/10/2019\r\n
+comment1.params=args
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\r\n\ Funcao\ principal\ do\ programa\r\n
+comment2.params=
+comment2.target=void\ createGUI()
+comment2.text=\r\n\ Cria\ a\ interface\ grafica\ do\ usuario\r\n
+comment3.params=e
+comment3.target=void\ actionPerformed(java.awt.event.ActionEvent)
+numComments=4

@@ -1,0 +1,6 @@
+TITULO DO PROJETO: GERADOR DE MÚSICA A PARTIR DE TEXTO
+OBJETIVO DO PROJETO: a definição, a implementação, teste e depuração de um GERADOR DE MÚSICA A PARTIR DE TEXTO.
+VERSÃO: 3
+COMO INICIAR O PROJETO:
+AUTORES: Bruna Cagliari, Ludhiane Pereira e Tiago Binz
+INSTRUÇÕES PARA O USUÁRIO:
