@@ -1,16 +1,12 @@
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 /**
  * Janela de interacao com o usuario
  *
  * @author Bruna Cagliari, Ludhiane Pereira e Tiago Binz
- * @version 03/10/2019
+ * @version 21/11/2019
  */
 public class MainWindow
 {
@@ -27,13 +23,76 @@ public class MainWindow
      */
     protected static void createGUI()
     {
+        JFrame frame = createFrame();
+        createTipsTextArea(frame);
+        createReadMoreButton(frame);
+        createInputTextArea(frame);
+        createPlayButton(frame);
+        createStopButton(frame);
+        
+        frame.setVisible(true);
+    }
+    
+    protected static JFrame createFrame()
+    {
         JFrame f = new JFrame("Music Player");
-        f.setSize(250, 250);
+        f.setSize(450, 400);
+        f.setResizable(false);
         f.setLocation(300,200);
+        f.setLayout(new FlowLayout());
+        return f;
+    }
+    
+    protected static JTextArea createTipsTextArea(JFrame parent)
+    {
+        final JTextArea area = new JTextArea();
+        area.setText
+        (
+            "          TEXTO                    RESULTADO\n" +
+            "(Letra A maiúscula)                Nota Lá\n"   +
+            "(Letra C maiúscula)                Nota Dó\n"   +
+            "(Letra D maiúscula)                Nota Ré\n"   +
+            "(Letra E maiúscula)                Nota Mi\n"   +
+            "(Letra F maiúscula)                Nota Fá\n"   +
+            "(Letra G maiúscula)                Nota Sol"
+        );
+        area.setEditable(false);
+        parent.getContentPane().add(area);
+        
+        return area;
+    }
+    
+    protected static JButton createReadMoreButton(JFrame parent)
+    {
+        final JButton button = new JButton("Ler mais");
+        parent.getContentPane().add(button);
+        button.addActionListener
+        (
+            new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    ReadMoreWindow readMore = new ReadMoreWindow();
+                }
+            }
+        );
+        
+        return button;
+    }
+    
+    protected static JTextArea createInputTextArea(JFrame parent)
+    {
         final JTextArea textArea = new JTextArea(10, 40);
-        f.getContentPane().add(BorderLayout.CENTER, textArea);
+        parent.add(textArea);
+        
+        return textArea;
+    }
+    
+    protected static JButton createPlayButton(JFrame parent)
+    {
         final JButton button = new JButton("Play");
-        f.getContentPane().add(BorderLayout.SOUTH, button);
+        parent.add(button);
         button.addActionListener
         (
             new ActionListener()
@@ -52,7 +111,26 @@ public class MainWindow
                 }
             }
         );
+        
+        return button;
+    }
     
-        f.setVisible(true);
+    protected static JButton createStopButton(JFrame parent)
+    {
+        final JButton button = new JButton("Stop");
+        parent.add(button);
+        button.addActionListener
+        (
+            new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    
+                }
+            }
+        );
+        
+        return button;
     }
 }
