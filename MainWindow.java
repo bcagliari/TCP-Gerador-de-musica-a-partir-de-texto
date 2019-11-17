@@ -10,6 +10,8 @@ import javax.swing.*;
  */
 public class MainWindow
 {
+    protected static JTextArea inputTextArea;
+    
     /**
      * Funcao principal do programa
      */
@@ -26,7 +28,7 @@ public class MainWindow
         JFrame frame = createFrame();
         createTipsTextArea(frame);
         createReadMoreButton(frame);
-        createInputTextArea(frame);
+        inputTextArea = createInputTextArea(frame);
         createPlayButton(frame);
         createStopButton(frame);
         
@@ -36,7 +38,7 @@ public class MainWindow
     protected static JFrame createFrame()
     {
         JFrame f = new JFrame("Music Player");
-        f.setSize(450, 400);
+        f.setSize(450, 375);
         f.setResizable(false);
         f.setLocation(300,200);
         f.setLayout(new FlowLayout());
@@ -102,7 +104,13 @@ public class MainWindow
                 {
                     try
                     {
-                        MusicPlayer.playNote("C");
+                        MusicPlayer.play
+                        (
+                            MusicReader.readMusicFromText
+                            (
+                                inputTextArea.getText()
+                            )
+                        );
                     }
                     catch(Exception expt)
                     {
@@ -126,7 +134,7 @@ public class MainWindow
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    
+                    MusicPlayer.stop();
                 }
             }
         );

@@ -20,6 +20,20 @@ public class MusicPlayer
     private static int octave = 3;      // oitava atual
     
     /**
+     * Reproduz uma música definida por uma lista
+     * ordenada de comandos.
+     */
+    public static void play(List<String> commands)
+    {
+        
+    }
+    
+    public static void stop()
+    {
+        
+    }
+    
+    /**
      * Reproduz uma nota musical
      */
     public static void playNote(String note) throws InterruptedException

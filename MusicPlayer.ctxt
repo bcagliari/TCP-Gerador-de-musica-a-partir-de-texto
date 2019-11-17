@@ -1,10 +1,15 @@
 #BlueJ class context
 comment0.target=MusicPlayer
 comment0.text=\r\n\ Tocador\ de\ musicas.\r\n\ \r\n\ @author\ Bruna\ Cagliari,\ Ludhiane\ Pereira\ e\ Tiago\ Binz\r\n\ @version\ 03/10/2019\r\n
-comment1.params=note
-comment1.target=void\ playNote(java.lang.String)
-comment1.text=\r\n\ Reproduz\ uma\ nota\ musical\r\n
-comment2.params=note
-comment2.target=int\ idMIDI(java.lang.String)
-comment2.text=\r\n\ Encontra\ o\ \u00EDndice\ MIDI\ para\ uma\ nota\:\ eg.\ 4C\ ->\ 60\r\n
-numComments=3
+comment1.params=commands
+comment1.target=void\ play(java.util.List)
+comment1.text=\r\n\ Reproduz\ uma\ m\u00FAsica\ definida\ por\ uma\ lista\r\n\ ordenada\ de\ comandos.\r\n
+comment2.params=
+comment2.target=void\ stop()
+comment3.params=note
+comment3.target=void\ playNote(java.lang.String)
+comment3.text=\r\n\ Reproduz\ uma\ nota\ musical\r\n
+comment4.params=note
+comment4.target=int\ idMIDI(java.lang.String)
+comment4.text=\r\n\ Encontra\ o\ \u00EDndice\ MIDI\ para\ uma\ nota\:\ eg.\ 4C\ ->\ 60\r\n
+numComments=5
