@@ -20,4 +20,6 @@ comment7.params=inInstrument
 comment7.target=void\ setInstrument(int)
 comment8.params=inOctave
 comment8.target=void\ setOctave(int)
-numComments=9
+comment9.params=c
+comment9.target=boolean\ isNoteCommand(java.lang.String)
+numComments=10

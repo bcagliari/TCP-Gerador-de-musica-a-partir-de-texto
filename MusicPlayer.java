@@ -17,7 +17,7 @@ public class MusicPlayer
     private static MidiChannel[] midiChannels;
     private static int instrument = 0;  // instrumento MIDI atual
     private static int volume = 30;     // volume atual - entre 0 e 127
-    private static int octave = 3;      // oitava atual
+    private static int octave = 6;      // oitava atual
     private static boolean paused = false;
     
     /**
@@ -55,8 +55,10 @@ public class MusicPlayer
     
     private static void executeCommand(String command) throws InterruptedException
     {
+        System.out.println(command);
+        
         // Nota
-        if (command.length() == 1)
+        if (isNoteCommand(command))
         {
             try
             {
@@ -117,11 +119,13 @@ public class MusicPlayer
         }
         
         // * comeca a tocar
-        midiChannels[instrument].noteOn(idMIDI(note), volume);
+        int noteIndex = idMIDI(note);
+        System.out.println(noteIndex);
+        midiChannels[instrument].noteOn(noteIndex, volume);
         // * espera
         Thread.sleep(1);
         // * para de tocar
-        midiChannels[instrument].noteOff(idMIDI(note));
+        midiChannels[instrument].noteOff(noteIndex);
     }
     
     /**
@@ -129,7 +133,7 @@ public class MusicPlayer
      */
     private static int idMIDI(String note)
     {
-        return notes.indexOf(note.substring(1)) + 12 * octave + 12; 
+        return notes.indexOf(note.substring(0)) + 12 * octave + 12; 
     }
     
     private static void setVolume(int inVolume)
@@ -145,5 +149,10 @@ public class MusicPlayer
     private static void setOctave(int inOctave)
     {
         octave = inOctave;
+    }
+    
+    private static boolean isNoteCommand(String c)
+    {
+        return c == "A" || c == "B" || c == "C" || c == "D" || c == "E" || c == "F" || c == "G";
     }
 }

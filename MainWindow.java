@@ -52,6 +52,7 @@ public class MainWindow
         (
             "          TEXTO                    RESULTADO\n" +
             "(Letra A maiúscula)                Nota Lá\n"   +
+            "(Letra B maiúscula)                Nota Sí\n"   +
             "(Letra C maiúscula)                Nota Dó\n"   +
             "(Letra D maiúscula)                Nota Ré\n"   +
             "(Letra E maiúscula)                Nota Mi\n"   +
