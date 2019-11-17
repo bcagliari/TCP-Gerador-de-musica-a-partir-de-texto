@@ -82,6 +82,21 @@
                 }
             }
             
+            class ShiftInstrument extends Command
+            {
+                private int amount;
+                
+                public ShiftInstrument(int inAmount)
+                {
+                    amount = inAmount;
+                }
+                
+                public String GetMusicalCommand()
+                {
+                    return "Shift instrument " + amount;
+                }
+            }
+            
             class IncreaseOctave extends Command
             {
                 private int increase;
@@ -117,7 +132,7 @@
             map.put("e", new RepeatNote());
             map.put("f", new RepeatNote());
             map.put("g", new RepeatNote());
-            map.put("H", new RepeatNote()); // Qualquer outra letra consoante
+            map.put("H", new RepeatNote()); // Qualquer outra consoante...
             map.put("h", new RepeatNote());
             map.put("J", new RepeatNote());
             map.put("j", new RepeatNote());
@@ -155,15 +170,28 @@
             
             // Alterar o instrumento
             map.put("!", new ChangeInstrument(114));    // Agogo
-            map.put("O", new ChangeInstrument(7));      // Harpsichord
+            map.put("O", new ChangeInstrument(7));      // Harpsichord...
             map.put("o", new ChangeInstrument(7));
             map.put("I", new ChangeInstrument(7));
             map.put("i", new ChangeInstrument(7));
             map.put("U", new ChangeInstrument(7));
             map.put("u", new ChangeInstrument(7));
-            map.put("\n", new ChangeInstrument(15));    // Tubular Bells
+            map.put("\n",new ChangeInstrument(15));     // Tubular Bells
             map.put(";", new ChangeInstrument(76));     // Pan Flute
             map.put(",", new ChangeInstrument(20));     // Church Organ
+            map.put("0", new ShiftInstrument(0));       // ATUAL + dígito...
+            map.put("1", new ShiftInstrument(1));
+            map.put("2", new ShiftInstrument(2));
+            map.put("3", new ShiftInstrument(3));
+            map.put("4", new ShiftInstrument(4));
+            map.put("5", new ShiftInstrument(5));
+            map.put("6", new ShiftInstrument(6));
+            map.put("7", new ShiftInstrument(7));
+            map.put("8", new ShiftInstrument(8));
+            map.put("9", new ShiftInstrument(9));
+            
+            // Incrementar oitava
+            map.put("?", new IncreaseOctave(1));
             
             // Caso não esteja definido no mapa
             Command defaultCommand = new RepeatNote();

@@ -18,6 +18,7 @@ public class MusicPlayer
     private static int instrument = 0;  // instrumento MIDI atual
     private static int volume = 30;     // volume atual - entre 0 e 127
     private static int octave = 3;      // oitava atual
+    private static boolean paused = false;
     
     /**
      * Reproduz uma música definida por uma lista
@@ -25,18 +26,81 @@ public class MusicPlayer
      */
     public static void play(List<String> commands)
     {
+        paused = false;
         
+        for(int i = 0; i < commands.size(); i++)
+        {
+            if (!paused)
+            {
+                try
+                {
+                    executeCommand(commands.get(i));
+                }
+                catch(Exception expt)
+                {
+                    throw new RuntimeException(expt);
+                }
+            }
+            else
+            {
+                return;
+            }
+        }
     }
     
     public static void stop()
     {
+        paused = true;
+    }
+    
+    private static void executeCommand(String command) throws InterruptedException
+    {
+        // Nota
+        if (command.length() == 1)
+        {
+            try
+            {
+               playNote(command); 
+            }
+            catch(Exception expt)
+            {
+                throw new RuntimeException(expt);
+            }
+        }
         
+        // Multiplicar volume
+        if (command.contains("Multiply volume"))
+        {
+            setVolume(volume * command.charAt(16));
+        }
+        
+        // Alterar o instrumento
+        if (command.contains("Change instrument"))
+        {
+            setInstrument(command.charAt(18));
+        }
+        else if(command.contains("Shift instrument"))
+        {
+            setInstrument(instrument + command.charAt(17));
+        }
+        
+        // Alterar oitava
+        if (command.contains("Increase octave"))
+        {
+            setOctave(octave + command.charAt(16));
+        }
+        
+        // Pausa
+        if (command == "Silence")
+        {
+            Thread.sleep(1);
+        }
     }
     
     /**
      * Reproduz uma nota musical
      */
-    public static void playNote(String note) throws InterruptedException
+    private static void playNote(String note) throws InterruptedException
     {
         if (midiChannels == null)
         {
@@ -66,5 +130,20 @@ public class MusicPlayer
     private static int idMIDI(String note)
     {
         return notes.indexOf(note.substring(1)) + 12 * octave + 12; 
+    }
+    
+    private static void setVolume(int inVolume)
+    {
+        volume = inVolume;
+    }
+    
+    private static void setInstrument(int inInstrument)
+    {
+        instrument = inInstrument;
+    }
+    
+    private static void setOctave(int inOctave)
+    {
+        octave = inOctave;
     }
 }
