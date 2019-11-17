@@ -1,9 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
-
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Synthesizer;
-import javax.sound.midi.MidiChannel;
+import javax.sound.midi.*;
 
 /**
  * Tocador de musicas.
@@ -14,55 +11,65 @@ import javax.sound.midi.MidiChannel;
 public class MusicPlayer
 {
     private static final List<String> notes = Arrays.asList("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B");
-    private static MidiChannel[] midiChannels;
-    private static int instrument = 0;  // instrumento MIDI atual
+    private static int channel = 0;  // instrumento MIDI atual
     private static int volume = 30;     // volume atual - entre 0 e 127
-    private static int octave = 6;      // oitava atual
-    private static boolean paused = false;
+    private static int octave = 3;      // oitava atual
+    private static int delayBetweenNotes = 100;
+    private static int currentInstrument = 0;
+    
+    private static MidiChannel[] midiChannels;
+    private static Synthesizer synth;
+    private static Instrument[] instruments;
     
     /**
      * Reproduz uma música definida por uma lista
      * ordenada de comandos.
      */
-    public static void play(List<String> commands)
+    public static void play(List<String> commands) throws InterruptedException
     {
-        paused = false;
+        if (midiChannels == null)
+        {
+            try
+            {
+                synth = MidiSystem.getSynthesizer();
+                synth.open();
+                midiChannels = synth.getChannels();
+                instruments = synth.getDefaultSoundbank().getInstruments();
+            }
+            catch(Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
         
         for(int i = 0; i < commands.size(); i++)
         {
-            if (!paused)
+            try
             {
-                try
-                {
-                    executeCommand(commands.get(i));
-                }
-                catch(Exception expt)
-                {
-                    throw new RuntimeException(expt);
-                }
+                Thread.sleep(executeCommand(commands.get(i)));
             }
-            else
+            catch(Exception expt)
             {
-                return;
+                throw new RuntimeException(expt);
             }
         }
     }
     
     public static void stop()
     {
-        paused = true;
+        
     }
     
-    private static void executeCommand(String command) throws InterruptedException
-    {
-        System.out.println(command);
-        
+    // Retorna o tempo de espera
+    private static int executeCommand(String command) throws InterruptedException
+    {        
         // Nota
         if (isNoteCommand(command))
         {
             try
             {
-               playNote(command); 
+               playNote(command);
+               return delayBetweenNotes;
             }
             catch(Exception expt)
             {
@@ -73,17 +80,17 @@ public class MusicPlayer
         // Multiplicar volume
         if (command.contains("Multiply volume"))
         {
-            setVolume(volume * command.charAt(16));
+            setVolume(volume * Integer.valueOf(command.substring(16)));
         }
         
         // Alterar o instrumento
         if (command.contains("Change instrument"))
         {
-            setInstrument(command.charAt(18));
+            setInstrument(Integer.valueOf(command.substring(18)));
         }
         else if(command.contains("Shift instrument"))
         {
-            setInstrument(instrument + command.charAt(17));
+            setInstrument(currentInstrument + command.charAt(17));
         }
         
         // Alterar oitava
@@ -95,37 +102,32 @@ public class MusicPlayer
         // Pausa
         if (command == "Silence")
         {
-            Thread.sleep(1);
+            return delayBetweenNotes;
         }
+        
+        return 0;
     }
     
     /**
      * Reproduz uma nota musical
      */
-    private static void playNote(String note) throws InterruptedException
-    {
-        if (midiChannels == null)
+    private static int playNote(String note) throws InterruptedException
+    {   
+        // * comeca a tocar
+        if (midiChannels[channel] != null)
         {
-            try
-            {
-                Synthesizer s = MidiSystem.getSynthesizer();
-                s.open();
-                midiChannels = s.getChannels();
-            }
-            catch(Exception e)
-            {
-                throw new RuntimeException(e);
-            }
+            int noteIndex = idMIDI(note);
+            
+            midiChannels[channel].noteOn(noteIndex, volume);
+            // * espera
+            Thread.sleep(100);
+            // * para de tocar
+            midiChannels[channel].noteOff(noteIndex);
+            
+            return 100;
         }
         
-        // * comeca a tocar
-        int noteIndex = idMIDI(note);
-        System.out.println(noteIndex);
-        midiChannels[instrument].noteOn(noteIndex, volume);
-        // * espera
-        Thread.sleep(1);
-        // * para de tocar
-        midiChannels[instrument].noteOff(noteIndex);
+        return 0;
     }
     
     /**
@@ -137,18 +139,24 @@ public class MusicPlayer
     }
     
     private static void setVolume(int inVolume)
-    {
+    {        
         volume = inVolume;
+        
+        if (volume > 127 || volume < 0)
+        {
+            volume = 30;
+        }
     }
     
     private static void setInstrument(int inInstrument)
     {
-        instrument = inInstrument;
+        currentInstrument = inInstrument % 128;
+        midiChannels[channel].programChange(currentInstrument);
     }
     
     private static void setOctave(int inOctave)
     {
-        octave = inOctave;
+        octave = inOctave%8;
     }
     
     private static boolean isNoteCommand(String c)

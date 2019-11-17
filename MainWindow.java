@@ -30,7 +30,6 @@ public class MainWindow
         createReadMoreButton(frame);
         inputTextArea = createInputTextArea(frame);
         createPlayButton(frame);
-        createStopButton(frame);
         
         frame.setVisible(true);
     }
@@ -117,25 +116,6 @@ public class MainWindow
                     {
                         throw new RuntimeException(expt);
                     }
-                }
-            }
-        );
-        
-        return button;
-    }
-    
-    protected static JButton createStopButton(JFrame parent)
-    {
-        final JButton button = new JButton("Stop");
-        parent.add(button);
-        button.addActionListener
-        (
-            new ActionListener()
-            {
-                @Override
-                public void actionPerformed(ActionEvent e)
-                {
-                    MusicPlayer.stop();
                 }
             }
         );

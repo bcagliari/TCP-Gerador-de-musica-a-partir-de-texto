@@ -54,9 +54,9 @@
             
             class MultiplyVolume extends Command
             {
-                private float multiplier;
+                private int multiplier;
                 
-                public MultiplyVolume(float n)
+                public MultiplyVolume(int n)
                 {
                     multiplier = n;
                 }
@@ -195,6 +195,8 @@
             
             // Caso não esteja definido no mapa
             Command defaultCommand = new RepeatNote();
+            
+            lastCommand = null;
             
             // Lê a música de acordo com as definicoes acima
             List<String> music = new ArrayList<String>();
