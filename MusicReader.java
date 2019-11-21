@@ -10,7 +10,7 @@
      */
     public class MusicReader
     {
-        static String lastCommand = null;
+        static String lastNote = null;
         
         /**
          * Decode a music from a text.
@@ -33,6 +33,7 @@
                 
                 public String GetMusicalCommand()
                 {
+                    lastNote = command;
                     return command;
                 }
             }
@@ -41,9 +42,11 @@
             {                
                 public String GetMusicalCommand()
                 {
-                    if (lastCommand != null && isNoteCommand(lastCommand))
+                    String ln = lastNote;
+                    lastNote = null;
+                    if (ln != null && isNoteCommand(ln))
                     {
-                        return lastCommand;
+                        return ln;
                     }
                     else
                     {
@@ -196,7 +199,7 @@
             // Caso não esteja definido no mapa
             Command defaultCommand = new RepeatNote();
             
-            lastCommand = null;
+            lastNote = null;
             
             // Lê a música de acordo com as definicoes acima
             List<String> music = new ArrayList<String>();
@@ -204,12 +207,10 @@
             {
                 if (map.containsKey(Character.toString(text.charAt(i))))
                 {
-                    lastCommand = map.get
+                    music.add
                     (
-                        Character.toString(text.charAt(i))
-                    ).GetMusicalCommand();
-                    
-                    music.add(lastCommand);
+                        map.get(Character.toString(text.charAt(i))).GetMusicalCommand()
+                    );
                 }
                 else
                 {
