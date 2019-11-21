@@ -1,6 +1,13 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * Janela de interacao com o usuario
@@ -30,6 +37,7 @@ public class MainWindow
         createReadMoreButton(frame);
         inputTextArea = createInputTextArea(frame);
         createPlayButton(frame);
+        createTXTButton(frame);
         
         frame.setVisible(true);
     }
@@ -111,6 +119,43 @@ public class MainWindow
                                 inputTextArea.getText()
                             )
                         );
+                    }
+                    catch(Exception expt)
+                    {
+                        throw new RuntimeException(expt);
+                    }
+                }
+            }
+        );
+        
+        return button;
+    }
+
+    protected static JButton createTXTButton(JFrame parent)
+    {
+        final JButton button = new JButton("Load TxT");
+        parent.add(button);
+        button.addActionListener
+        (
+            new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    try
+                    {
+                        JFileChooser chooser = new JFileChooser();
+                       
+                        chooser.setDialogTitle("Seleção de arquivos");
+                        chooser.setFileFilter(new FileNameExtensionFilter("txt", "txt"));
+                        
+                        if (chooser.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION){
+                         
+                          File file = chooser.getSelectedFile();
+                          inputTextArea.read( new FileReader( file.getAbsolutePath() ), null );
+                        }
+        
+                
                     }
                     catch(Exception expt)
                     {
