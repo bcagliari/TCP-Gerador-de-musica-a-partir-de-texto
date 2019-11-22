@@ -203,13 +203,13 @@
             
             // Lê a música de acordo com as definicoes acima
             List<String> music = new ArrayList<String>();
-            for (int i = 0; i < text.length(); i++)
+            for (int cont = 0; cont < text.length(); cont++)
             {
-                if (map.containsKey(Character.toString(text.charAt(i))))
+                if (map.containsKey(Character.toString(text.charAt(cont))))
                 {
                     music.add
                     (
-                        map.get(Character.toString(text.charAt(i))).GetMusicalCommand()
+                        map.get(Character.toString(text.charAt(cont))).GetMusicalCommand()
                     );
                 }
                 else
@@ -221,8 +221,8 @@
             return music;
     }
     
-    private static boolean isNoteCommand(String c)
+    private static boolean isNoteCommand(String caracter)
     {
-        return c == "A" || c == "B" || c == "C" || c == "D" || c == "E" || c == "F" || c == "G";
+        return caracter == "A" || caracter == "B" || caracter == "C" || caracter == "D" || caracter == "E" || caracter == "F" || caracter == "G";
     }
 }

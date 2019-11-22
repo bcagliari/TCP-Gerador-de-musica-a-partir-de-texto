@@ -44,12 +44,12 @@ public class MainWindow
     
     protected static JFrame createFrame()
     {
-        JFrame f = new JFrame("Music Player");
-        f.setSize(450, 375);
-        f.setResizable(false);
-        f.setLocation(300,200);
-        f.setLayout(new FlowLayout());
-        return f;
+        JFrame window = new JFrame("Music Generator");
+        window.setSize(450, 375);
+        window.setResizable(false);
+        window.setLocation(300,200);
+        window.setLayout(new FlowLayout());
+        return window;
     }
     
     protected static JTextArea createTipsTextArea(JFrame parent)
@@ -74,7 +74,7 @@ public class MainWindow
     
     protected static JButton createReadMoreButton(JFrame parent)
     {
-        final JButton button = new JButton("Ler mais");
+        final JButton button = new JButton("Read More");
         parent.getContentPane().add(button);
         button.addActionListener
         (

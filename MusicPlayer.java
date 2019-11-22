@@ -42,11 +42,11 @@ public class MusicPlayer
             }
         }
         
-        for(int i = 0; i < commands.size(); i++)
+        for(int cont = 0; cont < commands.size(); cont++)
         {
             try
             {
-                Thread.sleep(executeCommand(commands.get(i)));
+                Thread.sleep(executeCommand(commands.get(cont)));
             }
             catch(Exception expt)
             {
@@ -55,10 +55,6 @@ public class MusicPlayer
         }
     }
     
-    public static void stop()
-    {
-        
-    }
     
     // Retorna o tempo de espera
     private static int executeCommand(String command) throws InterruptedException
@@ -159,8 +155,8 @@ public class MusicPlayer
         octave = inOctave%8;
     }
     
-    private static boolean isNoteCommand(String c)
+    private static boolean isNoteCommand(String caracter)
     {
-        return c == "A" || c == "B" || c == "C" || c == "D" || c == "E" || c == "F" || c == "G";
+        return caracter == "A" || caracter == "B" || caracter == "C" || caracter == "D" || caracter == "E" || caracter == "F" || caracter == "G";
     }
 }
