@@ -112,13 +112,7 @@ public class MainWindow
                 {
                     try
                     {
-                        MusicPlayer.play
-                        (
-                            MusicReader.readMusicFromText
-                            (
-                                inputTextArea.getText()
-                            )
-                        );
+                        onClickedPlay();
                     }
                     catch(Exception expt)
                     {
@@ -129,6 +123,18 @@ public class MainWindow
         );
         
         return button;
+    }
+    
+    protected static void onClickedPlay()
+    {
+        try
+        {
+            MusicPlayer.play(MusicReader.readMusicFromText(inputTextArea.getText()));
+        }
+        catch(Exception expt)
+        {
+            throw new RuntimeException(expt);
+        }
     }
 
     protected static JButton createTXTButton(JFrame parent)
